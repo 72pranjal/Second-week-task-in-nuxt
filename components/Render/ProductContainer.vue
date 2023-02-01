@@ -1,5 +1,9 @@
 <template>
   <div class="main-container">
+    <div class="text-container">
+      <p class="middle-text">Women Pashmina Shawls</p>
+      <p class="count-number">{{ totalProductCount }} Items</p>
+    </div>
     <!-- Contain filter hide button and sorting options......... -->
     <div class="sort-option-container">
       <!-- hide filter button........... -->
@@ -49,7 +53,7 @@
             Clear All
           </button>
         </div>
-        <div>
+        <div :class=" isSideFiltersFixed ? 'fixed-container' : 'not-fixed'">
           <div class="filter-container" v-for="(filters, index) in dataForFilters" :key="index">
             <div class="filter-head" @click="showSubFIlters(filters.filter_lable)">
               <p @click="showSubFIlters(filters.filter_lable)">
@@ -101,6 +105,7 @@
             </div>
           </div>
         </div>
+        <RenderLoaderForData  />
       </div>
       <!-- <div v-else>
         <WhenProductIsEmapty />
@@ -149,63 +154,19 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Pagination section.................................. -->
-    <div class="pagination-container">
-      <div class="total-page-container">
-        <span>Page {{ currentPageNumber }} of {{ totalpageNumber }} </span>
-      </div>
-
-      <div class="counting-container">
-        <span class="show-in-desktop-view">
-          <button class="next-button" type="button" :style="{ opacity: currentPageNumber > 1 ? '' : '0.25' }"
-            @click="goToPreviousPage">
-            Previous
-          </button>
-        </span>
-        <span class="show-in-mobile-view">
-          <img @click="goToPreviousPage" class="goto-icon" src="@/assets/leftarrowIcon.png" alt=""
-            :style="{ opacity: currentPageNumber > 1 ? '' : '0.25' }" />
-        </span>
-        <button v-for="(pageCount, index) in paginationNumbers" :key="index" class="goto-clickable-page" :style="{
-          backgroundColor:
-            currentPageNumber === pageCount ? '#0C0C0C' : '#FFFFFF',
-          color: currentPageNumber === pageCount ? 'white' : '#303030',
-        }" type="button" @click="handleClickThenActive(pageCount)">
-          {{ pageCount }}
-        </button>
-        <span class="show-in-desktop-view">
-          <button class="next-button" type="button" :style="{
-            opacity: currentPageNumber < this.totalpageNumber ? '' : '0.25',
-          }" @click="gotoNextPage">
-            Next
-          </button>
-        </span>
-        <span class="show-in-mobile-view">
-          <img class="goto-icon" @click="gotoNextPage" src="@/assets/rightArrowIcon.png" alt="" :style="{
-            opacity: currentPageNumber < this.totalpageNumber ? '' : '0.25',
-          }" />
-        </span>
-      </div>
-
-       <div class="total-page-container-2">
-        <span class="hidden-text">Total Page = {{ totalpageNumber }} </span>
-      </div>
-    </div>
+    </div>   
   </div>
 </template>
 
 <script>
-
 export default {
   name: "RenderProductContainer",
   props: [
     "dataForFilters",
     "dataForProducts",
     "dataForSorting",
-    "currentPagination",
-    "totalpageNumber",
+    "totalProductCount",
+    "spinLoader"
   ],
   data() {
     return {
@@ -217,6 +178,8 @@ export default {
       currentPageNumber: 1,
       appliedFilter: [],
       showingMobileFilter: false,
+      scrollPosition: null,
+      isSideFiltersFixed: false,
     };
   },
   methods: {
@@ -259,76 +222,6 @@ export default {
       this.$emit("sortData", this.selectedSortingOption);
     },
 
-    // Function is used for pagination active button
-    handleClickThenActive(pageNo) {
-      if (!(this.currentPageNumber === pageNo)) {
-        this.currentPageNumber = pageNo;
-        this.$emit("handleClickThenActive", this.currentPageNumber);
-      } else {
-        this.currentPageNumber = 1;
-      }
-    },
-
-    // Function is used to goto page with increment of one in
-    // current page using next button
-    gotoNextPage() {
-      if (this.currentPageNumber < this.totalpageNumber) {
-        this.currentPageNumber += 1;
-        this.$emit("handleClickThenActive", this.currentPageNumber);
-      }
-      if (
-        this.currentPageNumber >
-        this.paginationNumbers[this.paginationNumbers.length - 1]
-      ) {
-        this.numberWhenClickNextButton();
-      }
-      return;
-    },
-
-    // Function is used to goto page with decrement of one in
-    // current page using previous button
-    goToPreviousPage() {
-      if (this.currentPageNumber > 1) {
-        this.currentPageNumber -= 1;
-        this.$emit("handleClickThenActive", this.currentPageNumber);
-      }
-      if (this.currentPageNumber < this.paginationNumbers[0]) {
-        this.numberWhenClickPreButton();
-      }
-      return;
-    },
-
-    // Manage pagination number when click on the next button
-    numberWhenClickNextButton() {
-      this.paginationNumbers.splice(0, this.paginationNumbers.length);
-      for (
-        let i = this.currentPageNumber;
-        i <= this.currentPageNumber + 5;
-        i++
-      ) {
-        this.paginationNumbers.push(i);
-        if (i >= this.totalpageNumber) break;
-      }
-    },
-
-    // Manage pagination number when click on the previous button
-    numberWhenClickPreButton() {
-      this.paginationNumbers.splice(0, this.paginationNumbers.length);
-      for (
-        let i = this.currentPageNumber - 5;
-        i <= this.currentPageNumber;
-        i++
-      ) {
-        this.paginationNumbers.push(i);
-      }
-    },
-
-    // Function is used to get data  from parent component
-    getDataFrom() {
-      this.containProductData = this.dataForProducts;
-      this.sortingOptions = this.dataForSorting;
-    },
-
     // Function is used get applied filter and store in array then send to api
     getAppliedFilter(codeVal, Value) {
       let ispushed = true;
@@ -361,11 +254,6 @@ export default {
       this.selectedSortingOption = selectedVal;
     },
 
-    // Function is used to set current pageNo in route
-    setCurrentPageNoInRoute() {
-      this.$router.push({ path: this.$route.fullPath, query: { pageNo: this.currentPageNumber } })
-    },
-
     // Function is used to set selected route by user  in route
     setAppliedSortInRoute() {
       if (this.selectedSortingOption !== "") {
@@ -376,7 +264,8 @@ export default {
     //Function is used to get the value of sort option and applied filters from query
     getValueFromRoute() {
       this.selectedSortingOption = this.$route.query.sort
-      // if (this.$route.query.filter !== "") {
+      // if(this.$route.query.filter ==="")
+      // return
       //   let filterStr = this.$route.query.filter;
       //   let a = filterStr.split(',');
       //   for (let i = 0; i < a.length; i++) {
@@ -386,8 +275,21 @@ export default {
       //   }
       //   if (this.selectedSortingOption !== "")
       //     this.sortBySelectedOption();
-      // }
-    }
+    },
+
+     // Function is use to calculate scroll position
+     getCurrentPosition() {
+      this.scrollPosition = window.scrollY;
+      if (this.scrollPosition > 100) {
+        this.isSideFiltersFixed = true
+      } else {
+        this.isSideFiltersFixed = false
+      }
+
+      if(this.scrollPosition > 2040) {
+        this.isSideFiltersFixed = false
+      }
+    },
   },
 
   watch: {
@@ -395,29 +297,36 @@ export default {
       this.sortBySelectedOption();
       this.setAppliedSortInRoute();
     },
-    currentPagination() {
-      this.currentPageNumber = this.currentPagination;
-    },
-    totalpageNumber() {
-      if (this.totalpageNumber <= 1) {
-        this.paginationNumbers.splice(0, this.paginationNumbers.length)
-      } else {
-        this.paginationNumbers = [1, 2, 3, 4, 5, 6]
-      }
-    },
-    currentPageNumber() {
-      this.setCurrentPageNoInRoute();
-    },
   },
   mounted() {
-    this.setCurrentPageNoInRoute();
     this.setAppliedSortInRoute();
     this.getValueFromRoute();
+    window.addEventListener("scroll", this.getCurrentPosition)
   }
 };
 </script>
 
 <style scoped>
+/* <!-- after nav bar text................... --> */
+.text-container {
+  text-align: center;
+  padding: 3% 0%;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.middle-text {
+  font-size: 32px;
+  color: #303030;
+  margin: 0px;
+}
+
+.count-number {
+  margin: 0px;
+  color: #000;
+  font-size: 18px;
+  font-weight: 800;
+}
 .sort-option-container {
   width: 100%;
   height: auto;
@@ -523,6 +432,20 @@ export default {
   font-size: 16px;
   display: block;
 }
+.fixed-container {
+  position: fixed;
+  left: 10px;
+  /* z-index: 345454px; */
+  top: 150px;
+  width: 22%;
+  max-width: 22%;
+  margin-left: 3px;
+  height: 70vh;
+  overflow: scroll;
+}
+.not-fixed {
+  height: auto;
+}
 
 li {
   list-style: none;
@@ -613,68 +536,17 @@ li {
 .heart-image {
   width: 27px;
 }
-
-/* pagination section ............................... */
-.pagination-container {
-  width: 100%;
-  max-width: 100%;
-  flex: 0 0 100%;
-  border-top: 1px solid black;
-  margin: 30px 0px;
-  padding: 30px 0px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.hidden-text {
-  display: none;
-}
-
-.counting-container {
-  margin-left: 10px;
-  display: flex;
-  column-gap: 20px;
-  align-items: center;
-  font-size: 16px;
-  color: #4c0b36;
-  text-align: center;
-}
-
-.goto-clickable-page {
-  padding: 10px;
-  margin: 0px 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.next-button {
-  padding: 10px;
-  color: #4c0b36;
-  font-size: 16px;
-  background-color: #ffffff;
-  border: none;
-  cursor: pointer;
-}
-
-.next-button:hover {
-  color: white;
-  background-color: black;
-}
-
 .bottom-nav-bar {
   display: none;
 }
 
-.show-in-desktop-view {
-  display: block;
-}
-
-.show-in-mobile-view {
-  display: none;
-}
-
 @media screen and (max-width: 768px) {
+  .middle-text {
+    font-size: 20px;
+  }
+  .count-number {
+    font-size: 16px;
+  }
   .side-filter-container {
     display: none;
   }
@@ -708,44 +580,6 @@ li {
 
   .bottom-nav-bar {
     display: block;
-  }
-
-  .show-in-desktop-view {
-    display: none;
-  }
-
-  /* pagination view style in mobile view.......................... */
-  .pagination-container {
-    display: grid;
-  }
-
-  .total-page-container {
-    width: 100%;
-    padding-bottom: 15px;
-    text-align: center;
-  }
-
-  .counting-container {
-    width: 100%;
-    column-gap: 2px;
-    align-items: center;
-    color: #4c0b36;
-  }
-
-  .goto-clickable-page {
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 12px;
-  }
-
-  .show-in-mobile-view {
-    display: block;
-  }
-
-  .goto-icon {
-    width: 16px;
-    height: 16px;
   }
 
   /* Style for filter in mobile view................................................ */

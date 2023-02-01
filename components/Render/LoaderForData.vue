@@ -10,7 +10,15 @@
 
 export default {
     name: "LoaderFordata",
-    props: ["spinLoader"] 
+    props: ["spinLoader"],
+    mounted() {
+      console.log(this.spinLoader)
+    },
+    watch: {
+      spinLoader(newVal) {
+        console.log(newVal)
+      }
+    }
 }
 </script>
 
@@ -22,7 +30,7 @@ export default {
   top: 60%;
   bottom: 40%;
   position: fixed;
-  z-index: 34;
+  z-index: 3456;
 }
 .loader {
   width: 50px;

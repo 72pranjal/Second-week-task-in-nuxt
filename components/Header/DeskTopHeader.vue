@@ -51,14 +51,14 @@
         </div>
 
         <div class="logo-container">
-          <img src="@/assets/Group 2.png" alt="" />
+          <NuxtLink to="/"><img src="@/assets/Group 2.png" alt="" /></NuxtLink>
         </div>
 
         <div class="second">
           <ul class="first-part-items">
             <li>
-              <div @focusin="showStory" @focusout="hideStory" class="show-in-line">
-                <p>OUR STORY</p>
+              <div class="show-in-line">
+                <NuxtLink to="/ourstory">OUR STORY</NuxtLink>
                 <span>
                   <img class="down-arrao-icon" src="@/assets/downArrowImage.webp" alt="" />
                 </span>
@@ -66,7 +66,7 @@
             </li>
             <li>
               <div class="show-in-line">
-                <p>CRAFTMANSHIP</p>
+                <NuxtLink to="/crasftmanship">CRAFTMANSHIP</NuxtLink>
                 <span>
                   <img class="down-arrao-icon" src="@/assets/downArrowImage.webp" alt="" />
                 </span>
@@ -87,24 +87,16 @@
     <div class="mobile-nav">
       <HeaderMobileViewNavBar :navBarFixed="navBarFixed" />
     </div>
-
-    <!-- after nav bar text................... -->
-    <div class="text-container">
-      <p class="middle-text">Women Pashmina Shawls</p>
-      <p class="count-number">{{ totalProductCount }} Items</p>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "DeskTopHeader",
-  props: ["totalProductCount", "currentPagination"],
   data() {
     return {
       scrollPosition: null,
       navBarFixed: false,
-      showOurStory: false
     }
   },
   methods: {
@@ -117,27 +109,10 @@ export default {
         this.navBarFixed = false
       }
     },
-    showStory() {
-      console.log("called")
-      this.showOurStory = true;
-      this.$emit("showStory", this.showOurStory)
-    },
-    hideStory() {
-      this.showOurStory = false;
-      this.$emit("showStory", this.showOurStory)
-    }
   },
   mounted() {
     window.addEventListener("scroll", this.getCurrentPosition)
   },
-   watch: {
-    currentPagination(newVal) {
-    if(newVal > 1) window.scrollTo(100, 100)
-    
-    }
-   }
-
-
 };
 </script>
 
@@ -236,7 +211,7 @@ li {
 .second {
   width: 28%;
   box-sizing: border-box;
-  margin-top: 2%;
+  margin-top: 3%;
 }
 
 .show-in-line {
@@ -292,13 +267,5 @@ li {
     display: block;
   }
 
-  .middle-text {
-    font-size: 20px;
-  }
-
-  .count-number {
-    font-size: 16px;
-
-  }
 }
 </style>

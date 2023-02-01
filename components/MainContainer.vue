@@ -1,17 +1,13 @@
 <template>
     <div id="app">
-        <!-- <HeaderDeskTopHeader :totalProductCount="totalProductCount" :currentPagination="currentPagination" /> -->
         <div>
-            <RenderLoaderFordata :spinLoader="spinLoader" />
             <div class="container">
                 <RenderProductContainer v-if="filtersData.length" :dataForFilters="filtersData"
-                    :dataForProducts="productsData" :dataForSorting="sortingOptions"
-                    @handleClickThenActive="getProductOfCurrentPage" @sortData="getSortedData"
-                    @getFilterString="getFilters" :currentPagination="currentPagination"
+                    :dataForProducts="productsData" :dataForSorting="sortingOptions" @sortData="getSortedData"
+                    @getFilterString="getFilters" :totalProductCount="totalProductCount" :spinLoader="spinLoader" />
+                <Pagination :currentPagination="currentPagination" @handleClickThenActive="getProductOfCurrentPage"
                     :totalpageNumber="totalpageNumber" />
-                <Pagination :currentPagination="currentPagination" :totalpageNumber="totalpageNumber" />
             </div>
-            <!-- <DeskTopFooter /> -->
         </div>
     </div>
 </template>
@@ -29,36 +25,31 @@ export default {
             totalpageNumber: 0,
             sortingValue: '',
             filterSting: '',
-            gotoTop: 0,
-            check: [],
             spinLoader: false,
         }
     },
+    async fetch() {
+        this.spinLoader = true
+        let data = await fetch(
+            `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.currentPagination}&count=20&sort_by=${this.sortingValue}&sort_dir=desc&filter=${this.filterSting}`
+        ).then((res) => res.json())
+        this.productsData = data.result.products
+        this.filtersData = data.result.filters
+        this.sortingOptions = data.result.sort
+        this.totalProductCount = data.result.count
+        this.getTotalPageCount()
+        this.spinLoader = false
+    },
     methods: {
-        async getProductData() {
-            let data = await fetch(
-                `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.currentPagination}&count=20&sort_by=${this.sortingValue}&sort_dir=desc&filter=${this.filterSting}`
-            ).then((res) => res.json())
-            console.log('helooo', data.result.products)
-            this.spinLoader = true
-            this.productsData = data.result.products
-            console.log("productsData", this.productsData)
-            this.filtersData = data.result.filters
-            this.sortingOptions = data.result.sort
-            this.totalProductCount = data.result.count
-            this.getTotalPageCount()
-            this.spinLoader = false
-        },
-
         // Function is used to get data from api when user
         // Change current page
         // When user applied filter
         // when user applied sorting on data
         async getDataUpdateDataFromApi() {
+            this.spinLoader = true
             let data = await fetch(
                 `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.currentPagination}&count=20&sort_by=${this.sortingValue}&sort_dir=desc&filter=${this.filterSting}`
             ).then((res) => res.json())
-            this.spinLoader = true
             this.productsData = data.result.products
             this.totalProductCount = data.result.count
             this.getTotalPageCount()
@@ -122,8 +113,7 @@ export default {
         },
     },
     mounted() {
-        console.log('mounted called')
-        this.getProductData()
+        // this.getProductData()
     },
     watch: {
         filterSting() {
