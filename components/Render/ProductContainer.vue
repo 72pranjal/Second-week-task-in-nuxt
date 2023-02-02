@@ -53,7 +53,7 @@
             Clear All
           </button>
         </div>
-        <div :class=" isSideFiltersFixed ? 'fixed-container' : 'not-fixed'">
+        <div :class="isSideFiltersFixed ? 'fixed-container' : 'not-fixed'">
           <div class="filter-container" v-for="(filters, index) in dataForFilters" :key="index">
             <div class="filter-head" @click="showSubFIlters(filters.filter_lable)">
               <p @click="showSubFIlters(filters.filter_lable)">
@@ -105,7 +105,7 @@
             </div>
           </div>
         </div>
-        <RenderLoaderForData  />
+        <RenderLoaderForData />
       </div>
       <!-- <div v-else>
         <WhenProductIsEmapty />
@@ -154,7 +154,7 @@
           </div>
         </div>
       </div>
-    </div>   
+    </div>
   </div>
 </template>
 
@@ -264,21 +264,21 @@ export default {
     //Function is used to get the value of sort option and applied filters from query
     getValueFromRoute() {
       this.selectedSortingOption = this.$route.query.sort
-      // if(this.$route.query.filter ==="")
-      // return
-      //   let filterStr = this.$route.query.filter;
-      //   let a = filterStr.split(',');
-      //   for (let i = 0; i < a.length; i++) {
-      //     let b = a[i].split("-")
-      //     this.getAppliedFilter(b[0], b[1])
-      //     this.appliedFiltersForChips.push(b[1])
-      //   }
-      //   if (this.selectedSortingOption !== "")
-      //     this.sortBySelectedOption();
+      let filterStr = this.$route.query.filter;
+      if (filterStr) {
+        let a = filterStr.split(',');
+        for (let i = 0; i < a.length; i++) {
+          let b = a[i].split("-")
+          this.getAppliedFilter(b[0], b[1])
+          this.appliedFiltersForChips.push(b[1])
+        }
+      }
+      if (this.selectedSortingOption !== "")
+        this.sortBySelectedOption();
     },
 
-     // Function is use to calculate scroll position
-     getCurrentPosition() {
+    // Function is use to calculate scroll position
+    getCurrentPosition() {
       this.scrollPosition = window.scrollY;
       if (this.scrollPosition > 100) {
         this.isSideFiltersFixed = true
@@ -286,7 +286,7 @@ export default {
         this.isSideFiltersFixed = false
       }
 
-      if(this.scrollPosition > 2040) {
+      if (this.scrollPosition > 2040) {
         this.isSideFiltersFixed = false
       }
     },
@@ -300,7 +300,9 @@ export default {
   },
   mounted() {
     this.setAppliedSortInRoute();
-    this.getValueFromRoute();
+    if (this.$route.query.sort || this.$route.query.filter) {
+      this.getValueFromRoute();
+    }
     window.addEventListener("scroll", this.getCurrentPosition)
   }
 };
@@ -327,6 +329,7 @@ export default {
   font-size: 18px;
   font-weight: 800;
 }
+
 .sort-option-container {
   width: 100%;
   height: auto;
@@ -432,6 +435,7 @@ export default {
   font-size: 16px;
   display: block;
 }
+
 .fixed-container {
   position: fixed;
   left: 10px;
@@ -443,6 +447,7 @@ export default {
   height: 70vh;
   overflow: scroll;
 }
+
 .not-fixed {
   height: auto;
 }
@@ -536,6 +541,7 @@ li {
 .heart-image {
   width: 27px;
 }
+
 .bottom-nav-bar {
   display: none;
 }
@@ -544,9 +550,11 @@ li {
   .middle-text {
     font-size: 20px;
   }
+
   .count-number {
     font-size: 16px;
   }
+
   .side-filter-container {
     display: none;
   }
