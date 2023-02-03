@@ -4,7 +4,8 @@
             <div class="container">
                 <RenderProductContainer v-if="filtersData.length" :dataForFilters="filtersData"
                     :dataForProducts="productsData" :dataForSorting="sortingOptions" @sortData="getSortedData"
-                    @getFilterString="getFilters" :totalProductCount="totalProductCount" :spinLoader="spinLoader" />
+                    @getFilterString="getFilters" :totalProductCount="totalProductCount" :spinLoader="spinLoader" 
+                   />
                 <Pagination :currentPagination="currentPagination" @handleClickThenActive="getProductOfCurrentPage"
                     :totalpageNumber="totalpageNumber" />
             </div>
@@ -13,6 +14,7 @@
 </template>
 
 <script>
+
 export default {
     name: 'MainContainer',
     data() {
@@ -34,6 +36,7 @@ export default {
             `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.currentPagination}&count=20&sort_by=${this.sortingValue}&sort_dir=desc&filter=${this.filterSting}`
         ).then((res) => res.json())
         this.productsData = data.result.products
+        console.log("thisdssssds", data)
         this.filtersData = data.result.filters
         this.sortingOptions = data.result.sort
         this.totalProductCount = data.result.count

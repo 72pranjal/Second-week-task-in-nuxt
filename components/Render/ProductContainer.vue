@@ -53,7 +53,8 @@
             Clear All
           </button>
         </div>
-        <div :class="isSideFiltersFixed ? 'fixed-container' : 'not-fixed'">
+        <!-- <div :class="isSideFiltersFixed ? 'fixed-container' : 'not-fixed'"> -->
+        <div :class="isSideFiltersFixed ? '' : ''">
           <div class="filter-container" v-for="(filters, index) in dataForFilters" :key="index">
             <div class="filter-head" @click="showSubFIlters(filters.filter_lable)">
               <p @click="showSubFIlters(filters.filter_lable)">
@@ -84,14 +85,24 @@
       <!-- all products container........... -->
       <div class="product-container">
         <div class="one-product-container">
-          <div v-for="(products, index) in dataForProducts" :key="index" class="product-image-container">
-            <div class="product-image">
-              <img class="image-kurta" :src="products.image" alt="" />
-
-              <div class="heart-image-container">
-                <img class="heart-image" src="@/assets/heartImage.svg" alt="" />
+          <div v-for="(products, index) in dataForProducts" :key="index" @mouseover="showDetails(products.id_product)"
+            @mouseleave="hideDetails()" class="product-image-container">
+            <NuxtLink :to="'/products/' + products.url_key">
+              <div class="product-image">
+                <VueSlickCarousel v-if="productIds.includes(products.id_product)" :autoplay="true" :arrows="false"
+                  :autoplaySpeed="2000" :pauseOnHover="false" :dots="true">
+                  <img class="image-kurta" v-for=" variation, index in products.gallery" :key="index"
+                    :src="variation.image" alt="">
+                </VueSlickCarousel>
+                <img v-else class="image-kurta" :src="products.image" alt="" />
+                <div v-if="productIds.includes(products.id_product)" class="button-conatiner">
+                  <button class="show-button">View Details</button>
+                </div>
+                <div class="heart-image-container">
+                  <img class="heart-image" src="@/assets/heartImage.svg" alt="" />
+                </div>
               </div>
-            </div>
+            </NuxtLink>
 
             <div class="title-container">
               <p>
@@ -107,9 +118,6 @@
         </div>
         <RenderLoaderForData />
       </div>
-      <!-- <div v-else>
-        <WhenProductIsEmapty />
-      </div> -->
     </div>
     <!-- Side filter in mobile vue................................................. -->
     <div v-if="showingMobileFilter" class="mobile-filter-container">
@@ -159,8 +167,15 @@
 </template>
 
 <script>
+import VueSlickCarousel from 'vue-slick-carousel'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+// optional style for arrows & dots
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 export default {
   name: "RenderProductContainer",
+  components: {
+    VueSlickCarousel
+  },
   props: [
     "dataForFilters",
     "dataForProducts",
@@ -180,6 +195,8 @@ export default {
       showingMobileFilter: false,
       scrollPosition: null,
       isSideFiltersFixed: false,
+      productIds: [],
+      isShowPdpPage: true,
     };
   },
   methods: {
@@ -236,10 +253,8 @@ export default {
       }
       if (ispushed) {
         this.appliedFilter.push(codeAndValueWithHiphan);
-        console.log("in ", this.appliedFilter)
       } else {
         this.appliedFilter.splice(index, 1);
-        console.log("out", this.appliedFilter)
       }
       this.$emit("getFilterString", this.appliedFilter);
     },
@@ -289,6 +304,16 @@ export default {
       if (this.scrollPosition > 2040) {
         this.isSideFiltersFixed = false
       }
+    },
+
+    //Function is use show view details button on mouseover
+    showDetails(proId) {
+      this.productIds.push(proId)
+    },
+
+    //Function is use hide view details button on mouseleave
+    hideDetails() {
+      this.productIds.splice(0, this.productIds.length)
     },
   },
 
@@ -507,18 +532,45 @@ li {
 
 /* style for product data................................ */
 .product-container {
-  width: 100%;
+  width: 75%;
   box-sizing: border-box;
   position: relative;
 }
 
 .product-image {
   position: relative;
+  cursor: pointer;
+}
+
+.carosual-image {
+  width: 75%;
+}
+
+.button-conatiner {
+  position: absolute;
+  background-color: #fff;
+  bottom: 3px;
+  padding-top: 14px;
+  width: 100%;
+  text-align: center;
+}
+
+.show-button {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000;
+  font-size: 14px;
+  padding: 6px 60px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.show-button:hover {
+  border: 1px solid #000;
 }
 
 .product-image-container {
   width: 24%;
-  cursor: pointer;
 }
 
 .image-kurta {
