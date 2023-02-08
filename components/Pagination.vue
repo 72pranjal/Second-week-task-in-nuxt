@@ -70,6 +70,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Pagination',
   props: ['currentPagination', 'totalpageNumber'],
@@ -225,6 +226,10 @@ export default {
   border: none;
   cursor: pointer;
   font-size: 16px;
+}
+.goto-clickable-page:hover {
+  background-color: #000;
+  color: #ffffff;
 }
 
 @media screen and (max-width: 768px) {

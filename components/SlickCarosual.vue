@@ -1,6 +1,6 @@
 <template>
     <div class="carosual-container">
-        <VueSlickCarousel v-if="PdpProduct.name" v-bind="settings">
+        <VueSlickCarousel v-if="PdpProduct.name" v-bind="slickOptions">
             <div class="product-conatiner" v-for="product, index in PdpProduct.similar_products" :key="index">
                 <div class="product-conatiner2" >
                     <img class="image" :src="product.image" alt="">
@@ -24,13 +24,21 @@ export default {
     props: ["PdpProduct"],
     data() {
         return {
-            settings: {
+            slickOptions: {
                 autoplay: true,
                 dots: true,
                 slidesToShow: 4,
                 arrows: true,
                 swipeToSlide: true,
                 autoplaySpeed: 2000,
+                pauseOnHover: false
+            },
+            responsive: {
+                breakpoint: 768,
+                settings: {
+                    dots: true,
+                slidesToShow: 2,
+                }
             }
         }
     }
