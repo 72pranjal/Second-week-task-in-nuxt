@@ -2,7 +2,7 @@
     <div class="carosual-container">
         <VueSlickCarousel v-if="PdpProduct.name" v-bind="slickOptions">
             <div class="product-conatiner" v-for="product, index in PdpProduct.similar_products" :key="index">
-                <div class="product-conatiner2" >
+                <div class="product-conatiner2">
                     <img class="image" :src="product.image" alt="">
                     <p>{{ product.name }}</p>
                     <p>Rs. {{ product.price }}</p>
@@ -36,12 +36,13 @@ export default {
             responsive: {
                 breakpoint: 768,
                 settings: {
-                    dots: true,
-                slidesToShow: 2,
-                }
-            }
+                    slidesToShow: 2,
+                },
+            },
         }
+
     }
+
 }
 </script>
 
@@ -49,12 +50,15 @@ export default {
 .carosual-container {
     width: 100%;
 }
+
 .product-conatiner {
     width: 100%;
 }
+
 .product-conatiner2 {
     width: 70%;
 }
+
 .image {
     width: 100%;
 }
