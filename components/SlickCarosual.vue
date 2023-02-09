@@ -1,12 +1,14 @@
 <template>
     <div class="carosual-container">
         <VueSlickCarousel v-if="PdpProduct.name" v-bind="slickOptions">
-            <div class="product-conatiner" v-for="product, index in PdpProduct.similar_products" :key="index">
-                <div class="product-conatiner2">
-                    <img class="image" :src="product.image" alt="">
+            <div class="product-conatiner" v-for="(product, index) in PdpProduct.similar_products" :key="index">
+                   <div>
+                    <NuxtLink :to="'/products/' + product.url_key">
+                    <img class="image" :src="product.image" alt="" />
+                    </NuxtLink> 
                     <p>{{ product.name }}</p>
                     <p>Rs. {{ product.price }}</p>
-                </div>
+                   </div>
             </div>
         </VueSlickCarousel>
     </div>
@@ -21,7 +23,7 @@ export default {
     components: {
         VueSlickCarousel,
     },
-    props: ["PdpProduct"],
+    props: ['PdpProduct'],
     data() {
         return {
             slickOptions: {
@@ -31,18 +33,22 @@ export default {
                 arrows: true,
                 swipeToSlide: true,
                 autoplaySpeed: 2000,
-                pauseOnHover: false
-            },
-            responsive: {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                },
+                pauseOnHover: false,
+                responsive: [
+                    {
+                        breakpoint: 875,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: true,
+                            arrows: true
+                        },
+                    },
+                ],
             },
         }
-
-    }
-
+    },
 }
 </script>
 
@@ -52,14 +58,13 @@ export default {
 }
 
 .product-conatiner {
-    width: 100%;
-}
-
-.product-conatiner2 {
-    width: 70%;
+    padding: 20px;
+   width: 100%;
 }
 
 .image {
-    width: 100%;
+    width: 90%;
+    height: auto;
+    cursor: pointer;
 }
 </style>
