@@ -50,7 +50,7 @@ export default {
     transform: scale(1.09);
     cursor: zoom-in;
     transition: 0.8s all ease-in-out;
-}
+    }
 
 .image {
     width: 100%;
