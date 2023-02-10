@@ -17,12 +17,10 @@
       <!-- applied filters chips........... -->
       <div class="applied-chip-container" v-if="appliedFiltersForChips.length">
         <div class="cross-icon-container" v-for="(appliedFilter, index) in appliedFiltersForChips" :key="index">
-          <span class="filter-chip">
+          <div class="filter-chip">
             <p class="filter-name">{{ appliedFilter }}</p>
-            <span>
-              <img @click="removeAppliedFilter(index)" class="cross-icon" src="@/assets/darkCrosIcon.png" alt="" />
-            </span>
-          </span>
+            <img @click="removeAppliedFilter(index)" class="cross-icon" src="@/assets/darkCrosIcon.png" alt="" />
+          </div>
         </div>
       </div>
       <!-- sorting options dropDown................. -->
@@ -57,7 +55,7 @@
         <div :class="isSideFiltersFixed ? '' : ''">
           <div class="filter-container" v-for="(filters, index) in dataForFilters" :key="index">
             <div class="filter-head" @click="showSubFIlters(filters.filter_lable)">
-              <p @click="showSubFIlters(filters.filter_lable)">
+              <p class="label-text" @click="showSubFIlters(filters.filter_lable)">
                 {{ filters.filter_lable }}
               </p>
               <span v-if="!particularOpenSubFilter.includes(filters.filter_lable)">
@@ -105,14 +103,14 @@
             </NuxtLink>
 
             <div class="title-container">
-              <p>
+              <p class="title">
                 {{
                   products.Product_Title_FH === null
                     ? products.name
                     : products.Product_Title_FH
                 }}
               </p>
-              <p>Rs. {{ products.price }}</p>
+              <p class="price-product">Rs. {{ products.price }}</p>
             </div>
           </div>
         </div>
@@ -123,7 +121,7 @@
     <div v-if="showingMobileFilter" class="mobile-filter-container">
       <div class="mobile-filter">
         <div class="header">
-          <p class="header-text">FILTER</p>
+          <p class="header-text">Filter</p>
           <div v-if="appliedFiltersForChips.length">
             <button @click="clearAllAppliedFilters" class="clear-button">
               Clear All
@@ -335,6 +333,25 @@ export default {
 
 <style scoped>
 /* <!-- after nav bar text................... --> */
+input[type=checkbox] {
+  accent-color: #303030;
+}
+
+.title-container {
+  padding-top: 15px;
+  text-align: left;
+  font-size: 16px;
+}
+.title {
+  color: #0C0C0C;
+  opacity: 1;
+  font-weight: 500;
+}
+.price-product {
+  color: #4C0B36;
+  font-weight: 400;
+}
+
 .text-container {
   text-align: center;
   padding: 3% 0%;
@@ -350,9 +367,9 @@ export default {
 
 .count-number {
   margin: 0px;
-  color: #000;
+  color: #303030;
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 400;
 }
 
 .sort-option-container {
@@ -386,9 +403,15 @@ export default {
 }
 
 .dropdown-container {
-  width: 15%;
-  margin: 10px;
+  width: 18%;
+  border: 1px solid #303030;
   display: block;
+  margin-right: 25px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
 }
 
 .hide-all-filter {
@@ -407,6 +430,7 @@ export default {
 .cross-icon-container {
   font-size: 13px;
   padding: 2px 24px;
+  height: 20px;
   border-radius: 18px;
   border: 1px solid #707070;
   display: inline-block;
@@ -414,20 +438,25 @@ export default {
 
 .filter-name {
   white-space: pre;
+  margin: 0;
+  padding: 0;
+  color: #303030;
 }
 
 .cross-icon {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   cursor: pointer;
 }
 
 .drop-down-box {
   width: 100%;
-  height: 40px;
+  height: 35px;
   padding: 4px;
   font-size: 16px;
-  border: 1px solid #707070;
+  font-weight: 500;
+  background: #ffffff;
+  border: 1px solid #ccc;
   cursor: pointer;
 }
 
@@ -469,7 +498,7 @@ export default {
   width: 22%;
   max-width: 22%;
   margin-left: 3px;
-  height: 70vh;
+  height: 100vh;
   overflow: scroll;
 }
 
@@ -500,18 +529,27 @@ li {
 
 .subfilters {
   margin: 0px;
-  padding: 0px;
+  padding-bottom: 20px;
+  padding-left: 0;
 }
 
 .lable-subfilter {
   cursor: pointer;
+  align-items: center;
+  color: #303030;
+  font-weight: 500;
+}
+
+.label-text {
+  color: #303030;
+  font-weight: 600;
 }
 
 .filter-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 0px;
+  padding: 0;
   cursor: pointer;
 }
 
@@ -661,37 +699,38 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
     border-bottom: 1px solid #ccc;
   }
 
   .header-text {
     font-size: 18px;
-    font-weight: 600;
-    padding: 15px 10px;
+    font-weight: 500;
+    padding: 0px 3px;
     color: #000;
+    font-family: "Jost-regular";
   }
 
   .filter-lable-container {
-    width: 100%;
+    width: 85%;
   }
 
   .filter-lable-container-for-scroll {
     overflow: scroll;
     width: 40%;
-    height: 75vh;
+    height: 85vh;
   }
 
   .options-container {
     width: 60%;
     padding: 10px 12px;
     overflow: scroll;
-    height: 75vh;
+    height: 100vh;
   }
 
   .lable-and-options-container {
     flex: 0 0 100%;
     display: flex;
+    height: 100vh;
   }
 
   .label-button {
@@ -699,7 +738,7 @@ li {
     border: none;
     text-align: left;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700;
     color: #000;
     padding: 14px 13px;
   }

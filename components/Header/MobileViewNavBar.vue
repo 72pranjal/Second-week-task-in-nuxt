@@ -26,14 +26,15 @@
         </div>
 
         <!-- slide nav bar............................... -->
-        <div class="show-two-div" >
+        <div class="show-two-div">
             <div v-if="isShowSideNavBar" :style="{ width: isShowSideNavBar ? '75%' : '0%' }" class="nav-container">
                 <div class="login-container">
                     <div>
                         <p class="login-text">Login</p>
                     </div>
                     <div>
-                        <img @click="isShowSideNavBar = !isShowSideNavBar" class="cross-icon" src="@/assets/whiteCrossIcon.png" alt="">
+                        <img @click="isShowSideNavBar = !isShowSideNavBar" class="cross-icon"
+                            src="@/assets/whiteCrossIcon.png" alt="">
                     </div>
                 </div>
                 <div class="links-container">
@@ -71,6 +72,7 @@
 </template>
 
 <script>
+
 export default {
     name: "MobileViewNavBar",
     props: ["navBarFixed"],
@@ -101,7 +103,9 @@ export default {
     padding: 10px 8px;
     display: flex;
     justify-content: space-between;
-    box-shadow: 0px 4px 12px 0px rgb(0 0 0 / 5%);
+    position: sticky;
+    top: 0;
+    box-shadow: 0 6px 14px 0 rgb(0 0 0 / 5%);
 }
 
 .lover-header-fixed {
@@ -109,12 +113,11 @@ export default {
     padding: 10px 8px;
     display: flex;
     justify-content: space-between;
-    box-shadow: 0px 4px 12px 0px rgb(0 0 0 / 5%);
     position: fixed;
     left: 0px;
     right: 0px;
     top: 0px;
-    z-index: 234;
+    z-index: 2;
 }
 
 .logo-container {
@@ -136,11 +139,13 @@ export default {
     display: flex;
     align-items: center;
     text-align: end;
+    column-gap: 15px;
 }
 
 .action-image {
     width: 75%;
 }
+
 .show-two-div {
     width: 100%;
     max-width: 100%;
@@ -151,14 +156,17 @@ export default {
     transition: 0.5s all;
     z-index: 5453;
 }
+
 .nav-container {
     width: 75%;
 }
+
 .close-side-nav-bar {
     width: 26%;
     max-width: 25%;
-    background-color: rgb(0,0,0, .8);
+    background-color: rgb(0, 0, 0, .8);
 }
+
 .login-container {
     background-color: #501337;
     padding: 10px 20px;

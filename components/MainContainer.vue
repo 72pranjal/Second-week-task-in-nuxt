@@ -136,4 +136,8 @@ export default {
     padding: 0px 10px;
     font-family: Jost-regular;
 }
+body {
+    margin: 0;
+    padding: 0;
+}
 </style>

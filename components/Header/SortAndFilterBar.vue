@@ -1,31 +1,39 @@
 <template>
     <div>
         <div v-if="isShowSortingList && !isShowMobileFiler" class="sorting-option-container">
-            <div class="sorting-option">
+            <div @click="isShowSortingList = !isShowSortingList" class="transparent-container">
+                <div @click.stop="" class="sorting-option">
                 <ul>
-                    <li>Sort: By</li>
+                    <li class="top-list-heading">Sort: By</li>
                     <li 
                     v-for="(sortoption, index) in sortingOptions"
                     @click="getOptionValue(sortoption.code)"
                      :key="index"
+                     class="sorting-options"
                      >
                         {{ sortoption.label }}
                     </li>
                 </ul>
             </div>
+            </div>
         </div>
         <div class="sort-filter-container">
             <div class="sort-button">
                 <button v-if="!isShowMobileFiler" @click="isShowSortingList = !isShowSortingList" class="action-button" type="button">
-                    SORT: BY
+                    <img class="imp-icon" src="@/assets/sortingIcon.png" alt="">
+                    <p>SORT: BY</p>
                 </button>
-                <button @click="hideMobileFilter" v-else type="button"  class="action-button">
-                   CLOSE
+                <button @click="hideMobileFilter" v-else type="button"  class="close-button">
+                  CLOSE
                 </button>
             </div>
             <div class="filter-button">
-                <button v-if="appliedFilterLength === 0 " @click="showMobileFIlter" class="action-button" type="button">FILTER</button>
-                <button v-else @click="hideMobileFilter" class="action-button" type="button">Apply</button>
+                <button v-if="!isShowMobileFiler" @click="showMobileFIlter" class="action-button" type="button">
+                    <p><img class="imp-icon"  src="@/assets/filterIcon.avif" alt=""></p>
+                    <p>FILTER</p>
+                </button>
+
+                <button v-else @click="hideMobileFilter" class="apply-button" type="button">Apply</button>
             </div>
         </div>
     </div>
@@ -75,27 +83,33 @@ export default {
     left: 0px;
     right: 0px;
     display: flex;
+    border-top: 1px solid #ccc;
     justify-content: space-between;
 }
 
 .sort-button {
     width: 49%;
 }
+.imp-icon {
+    width: 20px;
+    height: 20px;
+}
 
 .filter-button {
     width: 49%;
 }
-
 li {
     list-style: none;
     text-align: center;
-    color: #000;
-    padding: 14px 0px;
     margin: 0px;
-    font-size: 18px;
-    font-weight: 800;
+    padding: 14px 0px;
     cursor: pointer;
+    color: #000;
     border-bottom: 1px solid #ccc;
+}
+.sorting-options {
+    font-size: 16px;
+    font-weight: 600;
 }
 
 ul {
@@ -104,24 +118,60 @@ ul {
 }
 
 .action-button {
+    display: flex;
+    column-gap: 30px;
+    align-items: center;
     width: 100%;
     background-color: #fff;
     color: #000;
-    padding: 20px 2px;
     border: none;
     font-size: 16px;
-    font-weight: 800;
+    font-weight: 700;
     cursor: pointer;
 }
-
-.sorting-option-container {
+.top-list-heading {
+    font-size: 20px;
+    font-weight: 800;
+    color: #000;
+}
+.sorting-option {
     position: fixed;
-    width: 95%;
+    width: 100%;
+    top: auto;
     margin: auto;
+    padding: 0;
     background-color: #fff;
     bottom: 50px;
-    left: 0px;
-    right: 0px;
-    z-index: 54553;
+}
+.transparent-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    width: 100%;
+    height: 100vh;
+    z-index: 34;
+    background-color: rgb(0, 0, 0, .5);
+}
+.close-button {
+    width: 100%;
+    text-align: center;
+    border: none;
+    background-color: #fff;
+    color: #000;
+    padding: 14px 0px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.apply-button {
+    width: 100%;
+    padding: 14px 0px;
+    text-align: center;
+    border: none;
+    background-color: #fff;
+    color: red;
+    font-size: 16px;
+    font-weight: 700;
 }
 </style>

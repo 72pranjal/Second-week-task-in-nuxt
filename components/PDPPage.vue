@@ -1,6 +1,13 @@
 <template>
     <div class="pdp-container">
         <div class="content-container">
+            <div class="breadcrumb-conatiner">
+
+                <NuxtLink to="/" ><p class="link-for-home-page">Home</p></NuxtLink>
+                <p class="slace-sym">  / </p>
+                 <p class="current-location">{{ PdpProduct.name }}</p>
+
+            </div>
             <div class="parent-div">
                 <div class="image-container">
                     <LightGallery v-if="PdpProduct.name" :images="PdpProduct.gallery" />
@@ -161,6 +168,28 @@ export default {
 </script>
 
 <style scoped>
+.breadcrumb-conatiner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 10px;
+}
+.link-for-home-page {
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+}
+.slace-sym {
+    font-size: 20px;
+    color: red;
+}
+.current-location {
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+
+}
+
 .pdp-container {
     width: 100%;
     max-width: 100%;
@@ -168,7 +197,7 @@ export default {
 }
 
 .content-container {
-    padding: 20px 15px;
+    padding: 10px 15px;
 }
 
 .parent-div {

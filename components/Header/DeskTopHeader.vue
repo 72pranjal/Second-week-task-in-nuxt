@@ -21,7 +21,11 @@
       </div>
 
       <!-- lover header........................... -->
-      <div :class="[navBarFixed ? 'lower-header-container-fixed' : 'lower-header-container']">
+      <div :class="[
+        navBarFixed
+          ? 'lower-header-container-fixed'
+          : 'lower-header-container',
+      ]">
         <div class="first">
           <ul class="first-part-items">
             <li>
@@ -58,7 +62,7 @@
           <ul class="first-part-items">
             <li>
               <div class="show-in-line">
-                <NuxtLink to="/ourstory">OUR STORY</NuxtLink>
+                <p>OUR STORY</p>
                 <span>
                   <img class="down-arrao-icon" src="@/assets/downArrowImage.webp" alt="" />
                 </span>
@@ -66,7 +70,8 @@
             </li>
             <li>
               <div class="show-in-line">
-                <NuxtLink to="/crasftmanship">CRAFTMANSHIP</NuxtLink>
+                <!-- <NuxtLink to="/crasftmanship">CRAFTMANSHIP</NuxtLink> -->
+                <p>CRAFTMANSHIP</p>
                 <span>
                   <img class="down-arrao-icon" src="@/assets/downArrowImage.webp" alt="" />
                 </span>
@@ -92,7 +97,7 @@
 
 <script>
 export default {
-  name: "DeskTopHeader",
+  name: 'DeskTopHeader',
   data() {
     return {
       scrollPosition: null,
@@ -102,7 +107,7 @@ export default {
   methods: {
     // Function is use to calculate scroll position
     getCurrentPosition() {
-      this.scrollPosition = window.scrollY;
+      this.scrollPosition = window.scrollY
       if (this.scrollPosition > 30) {
         this.navBarFixed = true
       } else {
@@ -111,9 +116,9 @@ export default {
     },
   },
   mounted() {
-    window.addEventListener("scroll", this.getCurrentPosition)
+    window.addEventListener('scroll', this.getCurrentPosition)
   },
-};
+}
 </script>
 
 <style scoped>
@@ -126,19 +131,18 @@ export default {
 }
 
 .upper-nav-bar {
-  background-color: #9d8b61;
+  background-color: #fff;
   width: 100%;
-  border-bottom: 1px solid #ccc;
 }
 
 .upper-nav-container {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  color: white;
+  color: #303030;
   font-size: 14px;
   padding: 10px 12px;
-  align-items: center;
-
+  border-bottom: 1px solid #ccc;
 }
 
 .first-part {
@@ -168,28 +172,31 @@ li {
 
 /* lover nav bar ................... */
 .lower-header-container {
-  color: #000;
+  color: #303030;
   width: 100%;
   padding: 1% 0%;
   display: flex;
+  font-weight: 500;
   font-size: 16px;
+  position: sticky;
+  top: 0;
   background-color: #fff;
-  box-shadow: 0px 4px 12px 0px rgb(0 0 0 / 5%);
+  box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
 }
 
 .lower-header-container-fixed {
-  color: #000;
+  color: #303030;
+  font-weight: 500;
   width: 100%;
   padding: 1% 0%;
   display: flex;
   font-size: 16px;
   background-color: #fff;
-  box-shadow: 0px 4px 12px 0px rgb(0 0 0 / 5%);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 2323;
+  z-index: 222;
 }
 
 .down-arrao-icon {
@@ -211,7 +218,7 @@ li {
 .second {
   width: 28%;
   box-sizing: border-box;
-  margin-top: 3%;
+  margin-top: 2%;
 }
 
 .show-in-line {
@@ -266,6 +273,5 @@ li {
   .mobile-nav {
     display: block;
   }
-
 }
 </style>
