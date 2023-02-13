@@ -1,10 +1,10 @@
 <template>
-    <div class="carosual-container">
+    <div class="slick-carosual-container">
         <VueSlickCarousel v-if="PdpProduct.name" v-bind="slickOptions">
-            <div class="product-conatiner" v-for="(product, index) in PdpProduct.similar_products" :key="index">
+            <div class="product-conatiner-slick" v-for="(product, index) in PdpProduct.similar_products" :key="index">
                    <div>
                     <NuxtLink :to="'/products/' + product.url_key">
-                    <img class="image" :src="product.image" alt="" />
+                    <img class="image-in-slick" :src="product.image" alt="" />
                     </NuxtLink> 
                     <p>{{ product.name }}</p>
                     <p>Rs. {{ product.price }}</p>
@@ -27,8 +27,6 @@ export default {
     data() {
         return {
             slickOptions: {
-                autoplay: true,
-                dots: true,
                 slidesToShow: 4,
                 arrows: true,
                 swipeToSlide: true,
@@ -41,7 +39,6 @@ export default {
                             slidesToShow: 2,
                             slidesToScroll: 1,
                             infinite: true,
-                            dots: true,
                             arrows: true
                         },
                     },
@@ -52,19 +49,36 @@ export default {
 }
 </script>
 
-<style scoped>
-.carosual-container {
+<style>
+.slick-carosual-container {
     width: 100%;
 }
 
-.product-conatiner {
+.product-conatiner-slick {
     padding: 20px;
    width: 100%;
 }
 
-.image {
+.image-in-slick {
     width: 90%;
     height: auto;
     cursor: pointer;
 }
+
+.slick-next, .slick-prev {
+    display: block;
+    background-color: red !important;
+    padding: 20px;
+    text-align: center;
+    border-radius: 50px;
+    color: black !important;
+}
+
+@media screen and (max-width: 875px) {
+    .slick-next, .slick-prev {
+        display: none !important;
+    }
+}
+
+
 </style>

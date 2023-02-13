@@ -81,8 +81,8 @@
         </div>
       </div>
       <!-- all products container........... -->
-      <div class="product-container">
-        <div class="one-product-container">
+      <div :class="[ isHideSideFilters ? 'product-container' : 'product-container-with-full' ]">
+        <div class="product-with-details">
           <div v-for="(products, index) in dataForProducts" :key="index" @mouseover="showDetails(products.id_product)"
             @mouseleave="hideDetails()" class="product-image-container">
             <NuxtLink :to="'/products/' + products.url_key">
@@ -394,6 +394,7 @@ input[type=checkbox] {
   flex-wrap: wrap;
   column-gap: 10px;
   row-gap: 10px;
+  display: block;
 }
 
 .filter-chip {
@@ -406,7 +407,7 @@ input[type=checkbox] {
   width: 18%;
   border: 1px solid #303030;
   display: block;
-  margin-right: 25px;
+  margin-right: 10px;
 }
 
 ul {
@@ -420,17 +421,19 @@ ul {
 }
 
 .show-filter-button {
-  padding: 12px;
+  padding: 8px;
   font-size: 16px;
   color: #303030;
   cursor: pointer;
   background-color: #ffffff;
+  border: 1px solid #ccc;
 }
 
 .cross-icon-container {
   font-size: 13px;
-  padding: 2px 24px;
+  padding: 3px 12px;
   height: 20px;
+  margin-left: 8px;
   border-radius: 18px;
   border: 1px solid #707070;
   display: inline-block;
@@ -473,7 +476,9 @@ ul {
 .filter-product-container {
   width: 100%;
   display: flex;
-  column-gap: 20px;
+  /* column-gap: 20px;
+   */
+   justify-content: space-between;
 }
 
 .filter-container {
@@ -482,7 +487,8 @@ ul {
 }
 
 .side-filter-container {
-  flex: 0 0 22%;
+  flex: 0 0 20%;
+  width: 20%;
   height: auto;
   box-sizing: border-box;
   background-color: #ffffff;
@@ -570,7 +576,17 @@ li {
 
 /* style for product data................................ */
 .product-container {
-  width: 75%;
+  width: 78%;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.product-container-with-full {
+  width: 100%;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   box-sizing: border-box;
   position: relative;
 }
@@ -608,16 +624,21 @@ li {
 }
 
 .product-image-container {
+  flex: 0 0 24%;
   width: 24%;
+  max-width: 24%;
 }
 
 .image-kurta {
   width: 100%;
 }
 
-.one-product-container {
+.product-with-details {
   display: flex;
   row-gap: 20px;
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
   column-gap: 10px;
   flex-wrap: wrap;
 }
@@ -636,7 +657,17 @@ li {
   display: none;
 }
 
+@media  screen and (max-width: 1024px){
+  .product-image-container {
+    flex: 0 0 32% !important;
+    width: 32% !important;
+    max-width: 32% !important;
+  }
+}
 @media screen and (max-width: 768px) {
+.applied-chip-container {
+  display: none;
+}
   .middle-text {
     font-size: 20px;
   }
@@ -654,16 +685,18 @@ li {
     position: relative;
     box-sizing: border-box;
   }
-
+  
   .product-image-container {
-    width: 48%;
+    width: 48% !important;
+    max-width: 48% !important;
+    flex: 0 0 48% !important;
   }
 
   .image-kurta {
     width: 100%;
   }
 
-  .one-product-container {
+  .product-with-details {
     justify-content: space-between;
     display: flex;
   }
@@ -744,9 +777,4 @@ li {
   }
 }
 
-@media only screen and (max-width: 1024px) and (min-width: 769px) {
-  .product-image-container {
-    width: 32%;
-  }
-}
 </style>

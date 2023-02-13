@@ -42,13 +42,13 @@ export default {
 .image-with-flex {
   display: flex;
   flex-wrap: wrap;
-  row-gap: 10px;
+  row-gap: 5px;
   flex: 0 0 100%;
   justify-content: space-between;
 }
 
 .one-image-container22 {
-  flex: 0 0 49%;
+  flex: 0 0 49.5%;
   overflow: hidden;
 }
 
@@ -88,4 +88,6 @@ export default {
 .lg-backdrop.in {
   opacity: .6 !important;
 }
+
+
 </style>

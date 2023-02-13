@@ -227,7 +227,7 @@ export default {
 .product-price {
     font-size: 30px;
     color: #000;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .text {
@@ -351,7 +351,7 @@ li {
     list-style: none;
     vertical-align: top;
     line-height: 15px;
-    border-bottom: 1px solid #eaeaec;
+    /* border-bottom: 1px solid #eaeaec; */
     margin: 0 0 8px;
     padding: 0 0 7px;
     width: 50%;

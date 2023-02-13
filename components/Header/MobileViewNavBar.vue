@@ -139,11 +139,11 @@ export default {
     display: flex;
     align-items: center;
     text-align: end;
-    column-gap: 15px;
 }
 
 .action-image {
     width: 75%;
+    float: right;
 }
 
 .show-two-div {

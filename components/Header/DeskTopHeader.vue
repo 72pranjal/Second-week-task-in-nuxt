@@ -235,7 +235,8 @@ li {
 }
 
 .action-image {
-  width: 80%;
+  width: 90%;
+  margin-left: 35px;
 }
 
 .first-part-items {
