@@ -8,10 +8,9 @@
     <div class="sort-option-container">
       <!-- hide filter button........... -->
       <div class="hide-filter-container">
-        <img v-if="isHideSideFilters" @click="hideSideFilter" class="hide-all-filter" src="@/assets/sideHilterHide.svg"
-          alt="" />
-        <button class="show-filter-button" v-else @click="showSideFilters">
-          Show Filter
+        <button class="show-filter-button" @click="showSideFilters">
+          <p><img class="filter-icon" src="@/assets/filterIcon.avif" alt=""></p>
+          <p>{{ isHideSideFilters ? 'HIDE FILTER' : 'SHOW FILTER' }}</p>
         </button>
       </div>
       <!-- applied filters chips........... -->
@@ -67,7 +66,7 @@
             </div>
             <div v-if="particularOpenSubFilter.includes(filters.filter_lable)">
               <ul class="subfilters">
-                <li v-for="(subFilter, index) in filters.options" :key="index">
+                  <li v-for="(subFilter, index) in filters.options" :key="index">
                   <input class="checkbox" type="checkbox" v-model="appliedFiltersForChips"
                     @click="getAppliedFilter(subFilter.code, subFilter.value)" :id="subFilter.value"
                     :value="subFilter.value" />
@@ -222,7 +221,11 @@ export default {
     },
     // function is use to show side filters filter
     showSideFilters() {
-      this.isHideSideFilters = true;
+      if(this.isHideSideFilters) {
+        this.isHideSideFilters = false
+      } else {
+        this.isHideSideFilters = true
+      }
     },
 
     // function is use to clear all applied filters
@@ -383,7 +386,6 @@ input[type=checkbox] {
 
 .hide-filter-container {
   width: 20%;
-  margin: 10px 3px;
   display: block;
 }
 
@@ -421,12 +423,21 @@ ul {
 }
 
 .show-filter-button {
-  padding: 8px;
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  height: 40px;
+  padding: 5px 15px;
+  font-size: 14px;
   color: #303030;
   cursor: pointer;
+  font-weight: 600;
   background-color: #ffffff;
   border: 1px solid #ccc;
+}
+.filter-icon {
+  width: 15px;
+  height: 15px;
 }
 
 .cross-icon-container {

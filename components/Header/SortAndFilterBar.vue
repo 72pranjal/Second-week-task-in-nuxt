@@ -91,8 +91,8 @@ export default {
     width: 49%;
 }
 .imp-icon {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
 }
 
 .filter-button {
@@ -119,14 +119,15 @@ ul {
 
 .action-button {
     display: flex;
-    column-gap: 30px;
+    justify-content: center;
+    column-gap: 10%;
     align-items: center;
     width: 100%;
     background-color: #fff;
     color: #000;
     border: none;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
 }
 .top-list-heading {

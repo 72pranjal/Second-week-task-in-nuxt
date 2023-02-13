@@ -235,6 +235,7 @@ export default {
 @media screen and (max-width: 768px) {
   .pagination-container {
     display: grid;
+    justify-content: center;
   }
 
   .total-page-container {

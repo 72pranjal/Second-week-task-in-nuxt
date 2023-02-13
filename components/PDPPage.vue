@@ -24,12 +24,9 @@
                     <div class="size-container">
                         <p class="size-text">SELECT SIZE</p>
                         {{ removeSqureBrakets(PdpProduct.size) }}
-                        <button @click="activeButton(size)" class="size-button" :style="{
-                            backgroundColor: activeSize.includes(size)
-                                ? '#501337'
-                                : '#FFFFFF',
-                            color: activeSize.includes(size) ? 'white' : '#000',
-                        }" v-for="(size, index) in productSize" :key="index">
+                        <button @click="activeButton(size)" 
+                        :class="[(activeSize.includes(size)) ? 'size-button-active' : 'size-button']" 
+                        v-for="(size, index) in productSize" :key="index">
                             {{ size }}
                         </button>
                     </div>
@@ -176,7 +173,7 @@ export default {
 }
 .link-for-home-page {
     color: #333;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
 }
 .slace-sym {
@@ -293,11 +290,23 @@ export default {
     border: 1px solid #ccc;
     font-weight: 500;
     cursor: pointer;
+    background-color: #fff;
+    color: #000;
+}
+.size-button-active {
+    padding: 9px 14px;
+    margin-left: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #501337;
+    color: #fff;
 }
 
 .size-button:hover {
     background-color: #501337;
-    color: white;
+    color: #fff;
 }
 
 .pincode-field {
@@ -316,6 +325,7 @@ export default {
     display: block;
     cursor: pointer;
     font-size: 16px;
+    padding-left: 0;
     background-color: #fff;
 }
 
