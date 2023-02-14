@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+@font-face {
+    font-family: jost-regular;
+    src: url(../Fonts/Jost-Medium.woff);
+}
+@font-face {
+    font-family: jost-medium;
+    src: url(../Fonts/Jost-Medium.woff);
+}
+@font-face {
+    font-family: jost-semibold;
+    src: url(../Fonts/Jost-SemiBold.woff);
+}
+body{
+    background-color: #ffffff;
+    -webkit-tap-highlight-color: transparent;
+    font-family: jost-regular;
+}

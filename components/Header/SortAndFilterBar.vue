@@ -126,9 +126,10 @@ ul {
     background-color: #fff;
     color: #000;
     border: none;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    padding: 20px;
 }
 .top-list-heading {
     font-size: 20px;

@@ -241,7 +241,6 @@ ul {
 .heading {
   color: #303030;
   font-size: 16px;
-  font-weight: 600;
 }
 
 .footer-social-media-container {
@@ -315,6 +314,7 @@ input:focus {
   .text {
     font-size: 20px;
     color: #000;
+    padding-bottom: 20px;
     font-weight: 800;
   }
 

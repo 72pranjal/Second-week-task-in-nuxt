@@ -94,8 +94,8 @@ export default {
     background-color: #9d8b61;
     color: white;
     text-align: center;
-    padding: 3px 30px;
-    font-size: 14px;
+    padding: 14px 30px;
+    font-size: 16px;
 }
 
 .lover-header {
@@ -118,6 +118,8 @@ export default {
     right: 0px;
     top: 0px;
     z-index: 2;
+  box-shadow: 2px 2px 2px hsl(0deg 0% 80% / 63%);
+
 }
 
 .logo-container {
@@ -154,7 +156,7 @@ export default {
     position: fixed;
     top: 0px;
     transition: 0.5s all;
-    z-index: 5453;
+    z-index: 3;
 }
 
 .nav-container {

@@ -31,23 +31,29 @@
                         </button>
                     </div>
                     <div class="action-btn-container">
-                        <span class="btn">
-                            <button class="addcart-btn">ADD TO CART</button>
+                        <span class="addtocart-btn">
+                            <button class="addcart-btn">
+                                <img  class="cart-heart-image"  src="@/assets/shopping-bag.png" alt="">
+                                ADD TO CART
+                            </button>
                         </span>
-                        <span class="btn">
-                            <button class="whislist-btn">WISHLIST</button>
+                        <span class="whishlist-btn-container">
+                            <button class="whislist-btn">
+                                <img class="cart-heart-image" src="@/assets/heartIcon.png" alt="">
+                                WISHLIST
+                            </button>
                         </span>
                     </div>
 
                     <div>
-                        <p class="product-name">DELIVERY PIN</p>
+                        <p class="delivery-pin">DELIVERY PIN</p>
                         <div>
                             <input class="pincode-field" type="text" placeholder="CHECK PINCODE" />
                         </div>
                     </div>
                     <div>
-                        <p>{{ PdpProduct.title_other_info }}</p>
-                        <p>{{ PdpProduct.description }}</p>
+                        <p class="delivery-pin">{{ PdpProduct.title_other_info }}</p>
+                        <p class="delivery-pin">{{ PdpProduct.description }}</p>
                     </div>
                     <div class="product-details-conatiner">
                         <!-- <div class="child-one"> -->
@@ -170,11 +176,11 @@ export default {
     flex-wrap: wrap;
     align-items: center;
     column-gap: 10px;
+    padding: 8px 0px;
 }
 .link-for-home-page {
     color: #333;
     font-size: 16px;
-    font-weight: 600;
 }
 .slace-sym {
     font-size: 20px;
@@ -183,8 +189,6 @@ export default {
 .current-location {
     color: #000;
     font-size: 14px;
-    font-weight: 600;
-
 }
 
 .pdp-container {
@@ -213,8 +217,13 @@ export default {
 
 .product-name {
     font-size: 22px;
-    font-weight: 500;
-    color: #000;
+    opacity: 60%;
+    font-weight: 100;
+    padding: 10px 20px 15px 0px;
+}
+.delivery-pin {
+    margin: 15px 0px;
+    font-weight: 100;
 }
 
 .name-continer {
@@ -223,13 +232,12 @@ export default {
 
 .product-price {
     font-size: 30px;
-    color: #000;
-    font-weight: 600;
+    padding-bottom: 20px;
 }
 
 .text {
     color: #000;
-    font-weight: 600;
+  font-family: "Jost-medium";
 }
 
 .action-btn-container {
@@ -239,9 +247,16 @@ export default {
     padding-bottom: 50px;
     margin-bottom: 10px;
 }
-
+.cart-heart-image {
+    width: 18px;
+    height: 18px;
+}
 .addcart-btn {
-    padding: 10px 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 15px;
+    padding: 12px 55px;
     background-color: #501337;
     color: #fff;
     font-size: 16px;
@@ -251,7 +266,11 @@ export default {
 }
 
 .whislist-btn {
-    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 15px;
+    padding: 12px 40px;
     border: 1px solid #ccc;
     background-color: #fff;
     color: #000;
@@ -267,14 +286,14 @@ export default {
 
 .container-title {
     text-align: center;
-    padding: 30px 0px;
-    font-size: 20px;
+    padding: 10px 0px;
+    font-size: 22px;
     color: #000;
-    font-weight: 600;
 }
 
 .size-container {
-    padding: 30px 0px;
+   padding-top: 20px;
+   padding-bottom: 30px;
 }
 
 .size-text {
@@ -284,6 +303,7 @@ export default {
 }
 
 .size-button {
+    margin-top: 15px;
     padding: 9px 14px;
     margin-left: 5px;
     font-size: 16px;
@@ -310,7 +330,7 @@ export default {
 }
 
 .pincode-field {
-    padding: 10px 10px;
+    padding: 10px 12px;
     border: 1px solid #000;
     width: 50%;
 }
@@ -388,21 +408,22 @@ span {
     }
 
     .action-btn-container {
-        border-bottom: 1px solid #ccc;
+        width: 100%;
         position: fixed;
-        z-index: 3434;
+        z-index: 9999;
         left: 0;
         right: 0;
         bottom: -10px;
-        width: 100%;
-        padding: 15px 30px;
+        padding: 10px 8px;
         background-color: #fff;
+        box-shadow: 0 0 4px 0 rgb(0 0 0 / 20%);
     }
 
-    .btn {
-        width: 50%;
-        left: 0;
-        right: 0;
+    .addtocart-btn {
+        width: 58%;
+    }
+    .whishlist-btn-container {
+        width: 40%;
     }
 
     .addcart-btn {
@@ -412,7 +433,7 @@ span {
     }
 
     .whislist-btn {
-        width: 80%;
+        width: 93%;
         padding: 12px;
         border-radius: 8px;
     }

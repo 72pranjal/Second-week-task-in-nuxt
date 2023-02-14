@@ -9,8 +9,10 @@
       <!-- hide filter button........... -->
       <div class="hide-filter-container">
         <button class="show-filter-button" @click="showSideFilters">
-          <p><img class="filter-icon" src="@/assets/filterIcon.avif" alt=""></p>
-          <p>{{ isHideSideFilters ? 'HIDE FILTER' : 'SHOW FILTER' }}</p>
+          <p>
+            <img class="filter-icon" src="@/assets/filterIcon.avif" alt="" />
+          </p>
+          <p>{{ isHideSideFilters? 'HIDE FILTER': 'SHOW FILTER' }}</p>
         </button>
       </div>
       <!-- applied filters chips........... -->
@@ -23,15 +25,16 @@
         </div>
       </div>
       <!-- sorting options dropDown................. -->
-      <div class="dropdown-container">
-        <select v-model="selectedSortingOption" class="drop-down-box">
-          <option class="drop-options" value="" disabled selected>
-            Sort By
-          </option>
-          <option v-for="(option, index) in dataForSorting" :key="index" class="drop-options" :value="option.code">
+      <div class="dropdown-container" @mouseover="showOptions" @mouseleave="hideOptions" >
+          <strong class="dropdown-header-container">SORT BY : &nbsp; {{ selectedSortingOptionLabel }}
+            <img class="down-arrow" src="@/assets/downArrowIcon.png" alt="" />
+          </strong>
+          <ul v-if="isShowSortingOptions" class="sorting-options">
+          <li v-for="(option, index) in dataForSorting" :key="index"
+            @click="getSelectedOptions(option.code, option.label)" class="sort-method">
             {{ option.label }}
-          </option>
-        </select>
+          </li>
+        </ul>
       </div>
 
       <!-- mobile view botton nav bar............................. -->
@@ -66,7 +69,7 @@
             </div>
             <div v-if="particularOpenSubFilter.includes(filters.filter_lable)">
               <ul class="subfilters">
-                  <li v-for="(subFilter, index) in filters.options" :key="index">
+                <li v-for="(subFilter, index) in filters.options" :key="index">
                   <input class="checkbox" type="checkbox" v-model="appliedFiltersForChips"
                     @click="getAppliedFilter(subFilter.code, subFilter.value)" :id="subFilter.value"
                     :value="subFilter.value" />
@@ -80,7 +83,11 @@
         </div>
       </div>
       <!-- all products container........... -->
-      <div :class="[ isHideSideFilters ? 'product-container' : 'product-container-with-full' ]">
+      <div :class="[
+        isHideSideFilters
+          ? 'product-container'
+          : 'product-container-with-full',
+      ]">
         <div class="product-with-details">
           <div v-for="(products, index) in dataForProducts" :key="index" @mouseover="showDetails(products.id_product)"
             @mouseleave="hideDetails()" class="product-image-container">
@@ -88,12 +95,12 @@
               <div class="product-image">
                 <VueSlickCarousel v-if="productIds.includes(products.id_product)" :autoplay="true" :arrows="false"
                   :autoplaySpeed="2000" :pauseOnHover="false" :dots="true">
-                  <img class="image-kurta" v-for=" variation, index in products.gallery" :key="index"
-                    :src="variation.image" alt="">
+                  <img class="image-kurta" v-for="(variation, index) in products.gallery" :key="index"
+                    :src="variation.image" alt="" />
                 </VueSlickCarousel>
                 <img v-else class="image-kurta" :src="products.image" alt="" />
                 <div v-if="productIds.includes(products.id_product)" class="button-conatiner">
-                  <button class="show-button">View Details</button>
+                  <button class="show-button">VIEW DETAIL</button>
                 </div>
                 <div class="heart-image-container">
                   <img class="heart-image" src="@/assets/heartImage.svg" alt="" />
@@ -120,7 +127,7 @@
     <div v-if="showingMobileFilter" class="mobile-filter-container">
       <div class="mobile-filter">
         <div class="header">
-          <p class="header-text">Filter</p>
+          <p class="header-text">FILTER</p>
           <div v-if="appliedFiltersForChips.length">
             <button @click="clearAllAppliedFilters" class="clear-button">
               Clear All
@@ -169,23 +176,25 @@ import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 // optional style for arrows & dots
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 export default {
-  name: "RenderProductContainer",
+  name: 'RenderProductContainer',
   components: {
-    VueSlickCarousel
+    VueSlickCarousel,
   },
   props: [
-    "dataForFilters",
-    "dataForProducts",
-    "dataForSorting",
-    "totalProductCount",
-    "spinLoader"
+    'dataForFilters',
+    'dataForProducts',
+    'dataForSorting',
+    'totalProductCount',
+    'spinLoader',
   ],
   data() {
     return {
       particularOpenSubFilter: [],
       appliedFiltersForChips: [],
       isHideSideFilters: true,
-      selectedSortingOption: "",
+      selectedSortingOptionCode: '',
+      selectedSortingOptionLabel: '',
+      isShowSortingOptions: false,
       paginationNumbers: [1, 2, 3, 4, 5, 6],
       currentPageNumber: 1,
       appliedFilter: [],
@@ -194,34 +203,34 @@ export default {
       isSideFiltersFixed: false,
       productIds: [],
       isShowPdpPage: true,
-    };
+    }
   },
   methods: {
     // Function is used for open and hide sub filters in destTop view
     showSubFIlters(productId) {
       if (!this.particularOpenSubFilter.includes(productId)) {
-        this.particularOpenSubFilter.shift();
-        this.particularOpenSubFilter.push(productId);
+        this.particularOpenSubFilter.shift()
+        this.particularOpenSubFilter.push(productId)
       } else {
-        this.particularOpenSubFilter.pop();
+        this.particularOpenSubFilter.pop()
       }
     },
 
     // Function is used to remove applied filter in chips section when click
     // on cross icon
     removeAppliedFilter(index) {
-      this.appliedFiltersForChips.splice(index, 1);
-      this.appliedFilter.splice(index, 1);
-      this.$emit("getFilterString", this.appliedFilter);
+      this.appliedFiltersForChips.splice(index, 1)
+      this.appliedFilter.splice(index, 1)
+      this.$emit('getFilterString', this.appliedFilter)
     },
 
     // function is use to hideside filter
     hideSideFilter() {
-      this.isHideSideFilters = false;
+      this.isHideSideFilters = false
     },
     // function is use to show side filters filter
     showSideFilters() {
-      if(this.isHideSideFilters) {
+      if (this.isHideSideFilters) {
         this.isHideSideFilters = false
       } else {
         this.isHideSideFilters = true
@@ -230,72 +239,74 @@ export default {
 
     // function is use to clear all applied filters
     clearAllAppliedFilters() {
-      this.appliedFiltersForChips.splice(0, this.appliedFiltersForChips.length);
-      this.appliedFilter.splice(0, this.appliedFilter.length);
-      this.$emit("getFilterString", this.appliedFilter);
+      this.appliedFiltersForChips.splice(0, this.appliedFiltersForChips.length)
+      this.appliedFilter.splice(0, this.appliedFilter.length)
+      this.$emit('getFilterString', this.appliedFilter)
     },
 
     // FUnction is used to sort products by selected options from dropdown
     sortBySelectedOption() {
-      this.$emit("sortData", this.selectedSortingOption);
+      this.$emit('sortData', this.selectedSortingOptionCode)
     },
 
     // Function is used get applied filter and store in array then send to api
     getAppliedFilter(codeVal, Value) {
-      let ispushed = true;
-      let index = null;
-      let codeAndValueWithHiphan = codeVal + "-" + Value;
+      let ispushed = true
+      let index = null
+      let codeAndValueWithHiphan = codeVal + '-' + Value
       for (let i = 0; i <= this.appliedFilter.length; i++) {
         if (this.appliedFilter[i] === codeAndValueWithHiphan) {
-          ispushed = false;
-          index = i;
-          break;
+          ispushed = false
+          index = i
+          break
         }
       }
       if (ispushed) {
-        this.appliedFilter.push(codeAndValueWithHiphan);
+        this.appliedFilter.push(codeAndValueWithHiphan)
       } else {
-        this.appliedFilter.splice(index, 1);
+        this.appliedFilter.splice(index, 1)
       }
-      this.$emit("getFilterString", this.appliedFilter);
+      this.$emit('getFilterString', this.appliedFilter)
     },
 
     // Function is use to show filter in moblie view
     showFilters(boolean) {
-      this.showingMobileFilter = boolean;
+      this.showingMobileFilter = boolean
     },
 
     // Function is use to show get selected sorting option  in moblie view
     getSortValueFromMobileView(selectedVal) {
-      this.selectedSortingOption = selectedVal;
+      this.selectedSortingOptionCode = selectedVal
     },
 
     // Function is used to set selected route by user  in route
     setAppliedSortInRoute() {
-      if (this.selectedSortingOption !== "") {
-        this.$router.push({ path: this.$route.fullPath, query: { sort: this.selectedSortingOption } })
+      if (this.selectedSortingOptionCode !== '') {
+        this.$router.push({
+          path: this.$route.fullPath,
+          query: { sort: this.selectedSortingOptionCode },
+        })
       }
     },
 
     //Function is used to get the value of sort option and applied filters from query
     getValueFromRoute() {
-      this.selectedSortingOption = this.$route.query.sort
-      let filterStr = this.$route.query.filter;
+      this.selectedSortingOptionCode = this.$route.query.sort
+      let filterStr = this.$route.query.filter
       if (filterStr) {
-        let a = filterStr.split(',');
+        let a = filterStr.split(',')
         for (let i = 0; i < a.length; i++) {
-          let b = a[i].split("-")
+          let b = a[i].split('-')
           this.getAppliedFilter(b[0], b[1])
           this.appliedFiltersForChips.push(b[1])
         }
       }
-      if (this.selectedSortingOption !== "")
-        this.sortBySelectedOption();
+      if (this.selectedSortingOptionCode !== '') this.sortBySelectedOption()
     },
 
     // Function is use to calculate scroll position
     getCurrentPosition() {
-      this.scrollPosition = window.scrollY;
+      this.scrollPosition = window.scrollY
       if (this.scrollPosition > 100) {
         this.isSideFiltersFixed = true
       } else {
@@ -316,42 +327,57 @@ export default {
     hideDetails() {
       this.productIds.splice(0, this.productIds.length)
     },
+
+    showOptions() {
+      this.isShowSortingOptions = true
+    },
+    hideOptions() {
+      this.isShowSortingOptions = false
+    },
+    getSelectedOptions(code, label) {
+      this.selectedSortingOptionCode = code
+      this.selectedSortingOptionLabel = label
+    },
   },
 
   watch: {
-    selectedSortingOption() {
-      this.sortBySelectedOption();
-      this.setAppliedSortInRoute();
+    selectedSortingOptionCode() {
+      this.sortBySelectedOption()
+      this.setAppliedSortInRoute()
     },
   },
   mounted() {
-    this.setAppliedSortInRoute();
+    this.setAppliedSortInRoute()
     if (this.$route.query.sort || this.$route.query.filter) {
-      this.getValueFromRoute();
+      this.getValueFromRoute()
     }
-    window.addEventListener("scroll", this.getCurrentPosition)
-  }
-};
+    window.addEventListener('scroll', this.getCurrentPosition)
+  },
+}
 </script>
 
 <style scoped>
 /* <!-- after nav bar text................... --> */
-input[type=checkbox] {
+input[type='checkbox'] {
   accent-color: #303030;
 }
 
 .title-container {
-  padding-top: 15px;
+  padding-top: 25px;
   text-align: left;
   font-size: 16px;
 }
+
 .title {
-  color: #0C0C0C;
+  color: #0c0c0c;
   opacity: 1;
+  font-family: "jost-medium";
   font-weight: 500;
 }
+
 .price-product {
-  color: #4C0B36;
+  color: #4c0b36;
+  font-family: "jost-medium";
   font-weight: 400;
 }
 
@@ -365,14 +391,12 @@ input[type=checkbox] {
 .middle-text {
   font-size: 32px;
   color: #303030;
-  margin: 0px;
 }
 
 .count-number {
-  margin: 0px;
   color: #303030;
   font-size: 18px;
-  font-weight: 400;
+  opacity: 70%;
 }
 
 .sort-option-container {
@@ -406,10 +430,52 @@ input[type=checkbox] {
 }
 
 .dropdown-container {
-  width: 18%;
-  border: 1px solid #303030;
+  width: 20%;
+  border: 1px solid #d3d3d3;
   display: block;
+  position: relative;
   margin-right: 10px;
+}
+.dropdown-header-container {
+  display: flex;
+  padding: 9px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #282c3f;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.down-arrow {
+  width: 16px;
+  height: 16px;
+}
+
+.sorting-options {
+  position: absolute;
+  z-index: 999;
+  top: 30px;
+  right: -1px;
+  width: 100%;
+  background-color: #fff;
+  color: #282c3f;
+  border: 1px solid #d3d3d3;
+  border-top: 0;
+  padding-top: 20px;
+}
+
+.sort-method {
+  padding: 13px 20px;
+  background-color: #fff;
+  color: #282c3f;
+  font-weight: 500;
+  line-height: 5px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.sort-method:hover {
+  background-color: #f1f1f1;
 }
 
 ul {
@@ -435,6 +501,7 @@ ul {
   background-color: #ffffff;
   border: 1px solid #ccc;
 }
+
 .filter-icon {
   width: 15px;
   height: 15px;
@@ -454,6 +521,7 @@ ul {
   white-space: pre;
   margin: 0;
   padding: 0;
+  font-family: "jost-medium";
   color: #303030;
 }
 
@@ -461,22 +529,6 @@ ul {
   width: 8px;
   height: 8px;
   cursor: pointer;
-}
-
-.drop-down-box {
-  width: 100%;
-  height: 35px;
-  padding: 4px;
-  font-size: 16px;
-  font-weight: 500;
-  background: #ffffff;
-  border: 1px solid #ccc;
-  cursor: pointer;
-}
-
-.drop-options {
-  cursor: pointer;
-  font-size: 16px;
 }
 
 /* filter and product place style...................... */
@@ -489,7 +541,7 @@ ul {
   display: flex;
   /* column-gap: 20px;
    */
-   justify-content: space-between;
+  justify-content: space-between;
 }
 
 .filter-container {
@@ -554,19 +606,20 @@ li {
   cursor: pointer;
   align-items: center;
   color: #303030;
+  font-family: "jost-medium";
   font-weight: 500;
 }
 
 .label-text {
   color: #303030;
-  font-weight: 600;
+  font-family: "jost-semibold";
 }
 
 .filter-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0;
+  padding: 10px 0px;
   cursor: pointer;
 }
 
@@ -625,6 +678,7 @@ li {
   background-color: #fff;
   color: #000;
   font-size: 14px;
+  font-family: "jost-medium";
   padding: 6px 60px;
   cursor: pointer;
   border-radius: 3px;
@@ -668,19 +722,24 @@ li {
   display: none;
 }
 
-@media  screen and (max-width: 1024px){
+@media screen and (max-width: 1024px) {
   .product-image-container {
     flex: 0 0 32% !important;
     width: 32% !important;
     max-width: 32% !important;
   }
 }
+
 @media screen and (max-width: 768px) {
-.applied-chip-container {
-  display: none;
-}
+  .title-container {
+    padding: 4px;
+  }
+  .applied-chip-container {
+    display: none;
+  }
+
   .middle-text {
-    font-size: 20px;
+    font-size: 1.5rem;
   }
 
   .count-number {
@@ -696,7 +755,7 @@ li {
     position: relative;
     box-sizing: border-box;
   }
-  
+
   .product-image-container {
     width: 48% !important;
     max-width: 48% !important;
@@ -726,6 +785,7 @@ li {
 
   /* Style for filter in mobile view................................................ */
   .mobile-filter-container {
+    font-family: "jost-regular";
     display: block;
     width: 100%;
     position: fixed;
@@ -738,7 +798,7 @@ li {
 
   .header {
     flex: 0 0 100%;
-    padding: 0px 20px;
+    padding: 15px 20px;
     background-color: #fff;
     display: flex;
     justify-content: space-between;
@@ -751,7 +811,7 @@ li {
     font-weight: 500;
     padding: 0px 3px;
     color: #000;
-    font-family: "Jost-regular";
+    font-family: 'Jost-regular';
   }
 
   .filter-lable-container {
@@ -787,5 +847,4 @@ li {
     padding: 14px 13px;
   }
 }
-
 </style>

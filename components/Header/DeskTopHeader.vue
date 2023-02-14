@@ -55,7 +55,7 @@
         </div>
 
         <div class="logo-container">
-          <NuxtLink to="/"><img src="@/assets/Group 2.png" alt="" /></NuxtLink>
+          <NuxtLink to="/"><img class="logo-image" src="@/assets/Group 2.png" alt="" /></NuxtLink>
         </div>
 
         <div class="second">
@@ -180,23 +180,28 @@ li {
   font-size: 16px;
   position: sticky;
   top: 0;
+  align-items: center;
+  font-family: "jost-medium";
   background-color: #fff;
   box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
 }
 
 .lower-header-container-fixed {
   color: #303030;
+  font-family: "jost-medium";
   font-weight: 500;
   width: 100%;
   padding: 1% 0%;
   display: flex;
   font-size: 16px;
+  align-items: center;
   background-color: #fff;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 222;
+  box-shadow: 2px 2px 2px hsl(0deg 0% 80% / 63%);
 }
 
 .down-arrao-icon {
@@ -212,7 +217,11 @@ li {
 
 .logo-container {
   width: 15%;
+  margin-left: 10px;
   box-sizing: border-box;
+}
+.logo-image {
+    width: 80% ;
 }
 
 .second {
@@ -229,9 +238,6 @@ li {
 .action-icon-container {
   width: 10%;
   box-sizing: border-box;
-  margin-top: 4.4%;
-  margin-left: 1%;
-  text-align: right;
 }
 
 .action-image {
@@ -243,6 +249,8 @@ li {
   display: flex;
   align-items: center;
   column-gap: 25px;
+  margin-bottom: 30px;
+  padding-left: 20%;
 }
 
 /* <!-- after nav bar text................... --> */
