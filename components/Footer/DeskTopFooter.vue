@@ -22,7 +22,7 @@
         <div class="footer-social-media-container">
           <div class="email-subscribe-container">
             <p class="heading">SIGN UP AND SAVE</p>
-            <p>
+            <p class="Subscribe-to-our">
               Subscribe to our newsletter and get 10% off your first purchase
             </p>
             <div class="input-button-container">
@@ -46,7 +46,7 @@
           </div>
 
           <div class="copyright-link">
-            <p>Copyright © 2021 by Ahujasons I Powered by GreenHonchos</p>
+            <p class="copyright-text">Copyright © 2021 by Ahujasons I Powered by GreenHonchos</p>
           </div>
         </div>
       </div>
@@ -57,13 +57,13 @@
       <div class="mobile-footer">
         <div class="social-meadia-container">
           <p class="text">GIVE US A FOLLOW</p>
-          <div class="social-meadia-images">
+          <div class="">
             <ul class="social-meadia">
-              <li><img src="@/assets/facebook.svg" alt="" /></li>
-              <li><img src="@/assets/twiter.svg" alt="" /></li>
-              <li><img src="@/assets/linkdin.svg" alt="" /></li>
-              <li><img src="@/assets/pather.svg" alt="" /></li>
-              <li><img src="@/assets/youtube.svg" alt="" /></li>
+              <li><img class="image" src="@/assets/facebook.svg" alt="" /></li>
+              <li><img class="image" src="@/assets/twiter.svg" alt="" /></li>
+              <li><img class="image" src="@/assets/linkdin.svg" alt="" /></li>
+              <li><img class="image" src="@/assets/pather.svg" alt="" /></li>
+              <li><img class="image" src="@/assets/youtube.svg" alt="" /></li>
             </ul>
           </div>
         </div>
@@ -204,6 +204,7 @@ li {
   line-height: 40px;
   font-size: 14px;
   cursor: pointer;
+  opacity: 70%;
 }
 
 li:hover {
@@ -239,8 +240,15 @@ ul {
 }
 
 .heading {
-  color: #303030;
   font-size: 16px;
+  font-family: "jost-regular";
+  opacity: 100%;
+  font-weight: 400;
+  color: #303030;
+}
+.Subscribe-to-our {
+  font-size: 14px;
+  margin: 10px 0;
 }
 
 .footer-social-media-container {
@@ -248,6 +256,7 @@ ul {
 }
 
 .input-button-container {
+  position: relative;
   width: 100%;
 }
 
@@ -256,6 +265,8 @@ ul {
   border-bottom: 1px solid #000;
   height: 40px;
   line-height: 40px;
+  width: 100%;
+  max-width: 100%;
   /* padding: 0px 80px 0px 0px; */
   color: #424242;
   font-size: 14px;
@@ -265,7 +276,6 @@ ul {
 
 input:focus {
   outline: none;
-  position: relative;
   border-bottom: 1px solid #000;
   /* border-bottom: 1px solid #000; */
 }
@@ -273,18 +283,29 @@ input:focus {
 .subscribe-button {
   border: none;
   position: absolute;
-  right: 12%;
+  right: 3px;
+  top: 16px;
+  font-size: 16px;
   background-color: transparent;
   color: #000;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .social-meadia-images {
   display: flex;
-  justify-content: space-between;
+  margin-top: 20px;
+ column-gap: 28px;
 }
 
 .social-meadia-container {
-  margin: 40px 2px;
+  margin: 45px 2px;
+}
+
+.copyright-text {
+  font-size: 14px;
+  font-family: "jost-medium";
+  opacity: 60%;
 }
 
 /* footer style in mobile view......................... */
@@ -309,6 +330,7 @@ input:focus {
 
   .mobile-footer {
     padding: 40px 10px;
+    padding-bottom: 80px;
   }
 
   .text {
@@ -322,6 +344,9 @@ input:focus {
     display: flex;
     flex-wrap: wrap;
     column-gap: 30px;
+  }
+  .image {
+    opacity: 100%;
   }
 
   .text1 {
@@ -347,6 +372,7 @@ input:focus {
 
   .subscribe-button {
     border: none;
+    right: 5%;
     background-color: #fff;
     color: #000;
   }
@@ -354,6 +380,7 @@ input:focus {
   .action-icon {
     width: 20px;
     height: 20px;
+    margin-top: 10px;
   }
 
   .heading-plus-icon {

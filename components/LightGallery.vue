@@ -68,7 +68,7 @@ export default {
 
 .lg-outer.lg-visible {
   background-color: #fff !important;
-  width: 50% !important;
+  width: 60% !important;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -89,5 +89,10 @@ export default {
   opacity: .6 !important;
 }
 
+@media screen and (max-width: 875px)  {
+  .lg-outer.lg-visible {
+  width: 98% !important;
+}
+}
 
 </style>

@@ -129,7 +129,7 @@ ul {
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    padding: 20px;
+    padding: 15px;
 }
 .top-list-heading {
     font-size: 20px;

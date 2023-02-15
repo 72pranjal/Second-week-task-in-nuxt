@@ -56,7 +56,6 @@
                         <p class="delivery-pin">{{ PdpProduct.description }}</p>
                     </div>
                     <div class="product-details-conatiner">
-                        <!-- <div class="child-one"> -->
                         <ul class="important-data">
                             <li v-for="(info, index) in data" :key="index">
                                 <span class="label">{{ info.label }}</span>
@@ -72,10 +71,6 @@
                                 Show Less Details
                             </button>
                         </div>
-                        <!-- </div> -->
-                        <!-- <div class="child-one">
-
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -150,13 +145,13 @@ export default {
             }
         },
 
-        // Add some data when user click or add more button
+        // Add some data when user click on add more button
         addSomeData() {
             this.end = this.end + 6
             this.getImportantDataForProduct()
         },
 
-        // Remove some data when user click or less more button
+        // Remove some data when user click on less more button
         hideSomeData() {
             this.end = 6
             this.getImportantDataForProduct()

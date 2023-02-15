@@ -71,7 +71,7 @@ export default {
 }
 
 .product-conatiner-slick {
-    padding: 20px;
+    padding: 10px;
     width: 100%;
 }
 
@@ -86,7 +86,10 @@ export default {
     position: absolute;
     z-index: 234234;
     top: 40%;
-    right: 10px;
+    right: 30px;
+}
+.slick-prev:before, .slick-next:before {
+    font-size: 30px !important;
 }
 
 .slick-prev {
@@ -94,7 +97,7 @@ export default {
     position: absolute;
     z-index: 234234;
     top: 40%;
-    left: 2px;
+    left: 0.01%;
 }
 
 .name {

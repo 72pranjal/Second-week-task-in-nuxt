@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination-container">
+  <div v-if="totalpageNumber" class="pagination-container">
     <div class="total-page-container">
       <span>Page {{ currentPageNumber }} of {{ totalpageNumber }} </span>
     </div>
@@ -70,7 +70,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Pagination',
   props: ['currentPagination', 'totalpageNumber'],

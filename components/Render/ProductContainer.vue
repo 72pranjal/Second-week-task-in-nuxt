@@ -45,7 +45,7 @@
     </div>
 
     <!-- Contain side filter and product.................. -->
-    <div class="filter-product-container">
+    <div :class="[dataForProducts ? 'filter-product-container': 'filter-product-container-hide']">
       <!-- side filter bar container ........... -->
       <div v-if="isHideSideFilters" class="side-filter-container">
         <div v-if="appliedFiltersForChips.length">
@@ -87,7 +87,9 @@
         isHideSideFilters
           ? 'product-container'
           : 'product-container-with-full',
-      ]">
+      ]"
+      v-if="dataForProducts"
+      >
         <div class="product-with-details">
           <div v-for="(products, index) in dataForProducts" :key="index" @mouseover="showDetails(products.id_product)"
             @mouseleave="hideDetails()" class="product-image-container">
@@ -122,6 +124,11 @@
         </div>
         <RenderLoaderForData />
       </div>
+      <div v-else>
+        <div class="msg-container">
+          <p class="message">No data found....................</p>
+        </div>
+      </div>
     </div>
     <!-- Side filter in mobile vue................................................. -->
     <div v-if="showingMobileFilter" class="mobile-filter-container">
@@ -147,6 +154,8 @@
                 {{ filters.filter_lable }}
               </button>
             </div>
+            <button class="label-button"></button>
+              <button class="label-button"></button>
           </div>
           <div class="options-container">
             <div v-for="(filters, index) in dataForFilters" :key="index">
@@ -358,6 +367,14 @@ export default {
 
 <style scoped>
 /* <!-- after nav bar text................... --> */
+.msg-container {
+ margin: 30px 20px;
+width: 100%;
+text-align: left;
+color: #303030;
+font-weight: 600;
+font-size: 18px;
+}
 input[type='checkbox'] {
   accent-color: #303030;
 }
@@ -539,9 +556,13 @@ ul {
 .filter-product-container {
   width: 100%;
   display: flex;
-  /* column-gap: 20px;
-   */
   justify-content: space-between;
+}
+.filter-product-container-hide {
+  width: 100%;
+  display: flex;
+  column-gap: 20px;
+  
 }
 
 .filter-container {
@@ -626,6 +647,7 @@ li {
 .plus-icon {
   height: 20px;
   width: 20px;
+  margin-top: 6px;
   cursor: pointer;
   align-items: center;
 }
@@ -815,13 +837,14 @@ li {
   }
 
   .filter-lable-container {
-    width: 85%;
+    width: 100%;
   }
 
   .filter-lable-container-for-scroll {
     overflow: scroll;
     width: 40%;
-    height: 85vh;
+    height: 95vh;
+    margin-bottom: 60px;
   }
 
   .options-container {
@@ -843,6 +866,7 @@ li {
     text-align: left;
     font-size: 16px;
     font-weight: 700;
+    word-break: break-all;
     color: #000;
     padding: 14px 13px;
   }

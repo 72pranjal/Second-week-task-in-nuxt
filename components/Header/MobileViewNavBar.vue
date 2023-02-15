@@ -197,7 +197,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 0px;
+    padding: 15px 0px;
     border-bottom: 1px solid #ccc;
 }
 

@@ -131,9 +131,9 @@ export default {
     background-color: #fff;
     width: 100%;
 }
-
 .container {
-    padding: 0px 10px;
+    padding-left: 12px;
+    padding-right: 5px;
     font-family: Jost-regular;
 }
 body {
